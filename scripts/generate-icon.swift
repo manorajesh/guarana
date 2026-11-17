@@ -112,14 +112,7 @@ private func render(size px: Int) -> CGImage {
     ctx.addPath(outer); ctx.setStrokeColor(color(0.86)); ctx.setLineWidth(5); ctx.strokePath()
     ctx.restoreGState()
 
-    // Raised inner plate.
-    let plate = squircle(CGRect(x: 174, y: 174, width: 676, height: 676))
-    withShadow(ctx, offsetY: -14, blur: 34, alpha: 0.16) {
-        fillVertical(ctx, plate, top: color(0.985), bottom: color(0.925))
-    }
-    bevel(ctx, plate, width: 4, light: 0.9, dark: 0.04)
-
-    // Glyph: centre the menu bar artwork on the plate.
+    // Glyph: centre the menu bar artwork on the tile.
     let (backLeaf, frontLeaf) = leafPaths()
     let fruit = CGMutablePath()
     fruit.addEllipse(in: fruitRect)
@@ -128,7 +121,7 @@ private func render(size px: Int) -> CGImage {
 
     let bounds = CGPath(ellipseIn: fruitRect, transform: nil).boundingBoxOfPath
         .union(backLeaf.boundingBoxOfPath).union(frontLeaf.boundingBoxOfPath)
-    let scale: CGFloat = 400 / max(bounds.width, bounds.height)
+    let scale: CGFloat = 440 / max(bounds.width, bounds.height)
     var g = CGAffineTransform(translationX: 512, y: 512 - 6)
     g = g.scaledBy(x: scale, y: scale)
     g = g.translatedBy(x: -bounds.midX, y: -bounds.midY)
@@ -153,7 +146,7 @@ private func render(size px: Int) -> CGImage {
         bevel(ctx, body, width: 7, light: 0.16, dark: 0.30, evenOdd: true)
     }
 
-    // Recessed ring: inner shadow where the plate shows through.
+    // Recessed ring: inner shadow where the tile shows through.
     ctx.saveGState()
     ctx.addPath(ringHole); ctx.clip()
     ctx.setShadow(offset: CGSize(width: 0, height: -6), blur: 14, color: color(0, 0.35))
